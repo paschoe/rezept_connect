@@ -26,7 +26,10 @@ try:
         query = query.encode('utf-8')
         cursor.execute(query)
         zutaten = (cursor.fetchall())
-        rezept_name = unicode(rezepte[int(rezept_id)-1][1])
+        for p in range(0,len(rezepte)):
+            if int(rezepte[p][0]) == int(rezept_id):
+                rezept_name = unicode(rezepte[p][1])
+
         print("Zutaten fuer " + rezept_name +":")
         disp_zutat=[]
         for j in range(0,len(zutaten)):
