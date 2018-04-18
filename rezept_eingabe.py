@@ -13,8 +13,23 @@ try:
         z = []
         for i in range(0,len(exist_zutaten)):
             z.append(exist_zutaten[i][0])
-
         print z
+        new_rezept = raw_input("Name des Rezepts: ")
+        new_rezept = new_rezept.decode("utf-8")
+        new_rezept_typ = raw_input("Typ des Rezepts: ")
+        new_rezept_typ = new_rezept_typ.decode("utf-8")
+        new_rezept_subtyp = raw_input("Subtyp des Rezepts: ")
+        if new_rezept_subtyp == '':
+            new_rezept_subtyp = u'NULL'
+        else:
+            new_rezept_subtyp = new_rezept_subtyp.decode("utf-8")
+            new_rezept_subtyp = u'"' + new_rezept_subtyp + u'"'
+
+        sql_new_rezept = u'INSERT INTO rezept_main(name,typ,subtyp) VALUES ("' + new_rezept +u'","' + new_rezept_typ + u'",' + new_rezept_subtyp+ u')'
+
+        print sql_new_rezept
+        cursor.execute(sql_new_rezept)
+        c.conn.commit()
 
         data_new_zutat =[]
         zutat = []
@@ -53,11 +68,18 @@ try:
         print("----------------------")
         data_new_typ =[]
         for j in range(0,len(data_new_zutat)):
-            d = raw_input("Definiere den Typ der neuen Zutat " + data_new_zutat[j] +":")
+            d = raw_input("Definiere den Typ der neuen Zutat " + data_new_zutat[j] +": ")
             d = d.decode("utf-8")
             data_new_typ.append(d)
         print data_new_zutat
         print data_new_typ
+
+        data_new_zutat_ready = []
+        for k in range(0,len(data_new_zutat)):
+            print(u"(u'"+data_new_zutat[k]+u"',u'"+data_new_typ[k]+u"')")
+            data_new_zutat_ready = data_new_zutat_ready.append(u"("+data_new_zutat[k]+u","+data_new_typ[k]+u")")
+        print data_new_zutat_ready
+        sql_new_zutaten = u"INSERT INTO zutaten VALUES"
 
 finally:
     c.conn.close()
