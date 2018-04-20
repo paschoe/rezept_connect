@@ -76,7 +76,7 @@ try:
         for k in range(0,len(data_new_zutat)):
             data_new_zutat_ready.append(u'("'+data_new_zutat[k]+u'",'+data_new_typ[k]+u')')
         if len(data_new_zutat_ready)>0:
-            sql_new_zutaten = u'INSERT INTO zutaten VALUES ' + u','.join(data_new_zutat_ready)
+            sql_new_zutaten = u'INSERT INTO zutaten(zutat,typ) VALUES ' + u','.join(data_new_zutat_ready)
             print sql_new_zutaten
             cursor.execute(sql_new_zutaten)
         c.conn.commit()
