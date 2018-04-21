@@ -24,7 +24,8 @@ try:
             new_rezept_subtyp = new_rezept_subtyp.decode("utf-8")
             new_rezept_subtyp = u'"' + new_rezept_subtyp + u'"'
 
-        sql_new_rezept = u'INSERT INTO rezept_main(name,typ,subtyp) VALUES ("' + new_rezept +u'","' + new_rezept_typ + u'",' + new_rezept_subtyp+ u')'
+        sql_new_rezept = u'INSERT INTO rezept_main(name,typ,subtyp) VALUES ("' + new_rezept +u'","' + new_rezept_typ\
+                         + u'",' + new_rezept_subtyp+ u')'
 
 
         cursor.execute(sql_new_rezept)
