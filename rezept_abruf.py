@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import connector as c
+from utilities import connector as c
 
 sql_zutaten = u"SELECT m.menge, m.einheit, m.zutat FROM zutaten_menge AS m JOIN rezept_main AS r USING(rezept_ID) " \
               u"WHERE r.rezept_id="
@@ -9,7 +9,7 @@ sql_addinf = u'SELECT a.ofeneinstellung,a.temperatur,a.Backform,a.zub1,a.zub2,a.
              u'FROM rezept_add AS a JOIN rezept_main AS r USING(rezept_ID) WHERE r.rezept_id='
 
 try:
-    with c.conn.cursor() as cursor:
+    with c.mysql_connect().cursor() as cursor:
         # Read a single record
         sql = "SELECT rezept_id, name FROM rezept_main"
         cursor.execute(sql)
@@ -75,4 +75,4 @@ try:
 
 
 finally:
-    c.conn.close()
+    c.mysql_connect().close()

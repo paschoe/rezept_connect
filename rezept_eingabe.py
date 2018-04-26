@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import connector as c
+from utilities import connector as c
 
 sql_get_zutaten = u"SELECT zutat FROM zutaten"
 sql_get_typen = u"SELECT typ FROM zutaten GROUP BY typ"
 
 try:
-    with c.conn.cursor() as cursor:
+    with c.mysql_connect().cursor() as cursor:
         cursor.execute(sql_get_zutaten)
         exist_zutaten = cursor.fetchall()
         z = []
@@ -80,7 +80,7 @@ try:
             sql_new_zutaten = u'INSERT INTO zutaten(zutat,typ) VALUES ' + u','.join(data_new_zutat_ready)
             print sql_new_zutaten
             cursor.execute(sql_new_zutaten)
-        c.conn.commit()
+        c.mysql_connect().commit()
 
 ## Befülle rezeptdb.zutaten_menge
         sql_get_newrezeptid = u'SELECT rezept_id FROM rezept_main WHERE name = "' + new_rezept + u'"'
@@ -96,7 +96,7 @@ try:
         sql_new_zutaten_menge = u'INSERT INTO zutaten_menge(rezept_ID, zutat, menge, einheit) ' \
                                 u'VALUES ' + u','.join(data_menge_ready)
         cursor.execute(sql_new_zutaten_menge)
-        c.conn.commit()
+        c.mysql_connect().commit()
 
 finally:
-    c.conn.close()
+    c.mysql_connect().close()
