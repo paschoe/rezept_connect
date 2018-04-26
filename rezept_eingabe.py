@@ -100,3 +100,4 @@ try:
 
 finally:
     c.mysql_connect().close()
+
