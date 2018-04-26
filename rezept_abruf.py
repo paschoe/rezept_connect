@@ -17,8 +17,8 @@ try:
 
         print("===================")
         print("Vorhandene Rezepte:")
-        for k in range(0,len(rezepte)):
-            d = unicode(rezepte[k][0])+" "+rezepte[k][1]
+        for k in range(0, len(rezepte)):
+            d = unicode(rezepte[k][0]) + " " + rezepte[k][1]
             print(d)
         print("-------------------")
 
@@ -29,19 +29,19 @@ try:
         query = query.encode('utf-8')
         cursor.execute(query)
         zutaten = (cursor.fetchall())
-        for p in range(0,len(rezepte)):
+        for p in range(0, len(rezepte)):
             if int(rezepte[p][0]) == int(rezept_id):
                 rezept_name = unicode(rezepte[p][1])
 
-        print("Zutaten fuer " + rezept_name +":")
+        print("Zutaten fuer " + rezept_name + ":")
         print("-------------------------")
-        disp_zutat=[]
-        for j in range(0,len(zutaten)):
-            if zutaten[j][0] != None:
+        disp_zutat = []
+        for j in range(0, len(zutaten)):
+            if zutaten[j][0] is not None:
                 menge = unicode(zutaten[j][0])
             else:
                 menge = unicode("")
-            if zutaten[j][1] != None:
+            if zutaten[j][1] is not None:
                 einheit = zutaten[j][1]
             else:
                 einheit = unicode("")
@@ -58,21 +58,18 @@ try:
         query_addinf = query_addinf.encode('utf-8')
         cursor.execute(query_addinf)
         add_inf = cursor.fetchone()
-        if add_inf == None:
+        if add_inf is None:
             print("Keine Informationen vorhanden!")
             exit()
         add_inf = list(add_inf)
-        if add_inf[0] != None:
+        if add_inf[0] is not None:
             print(u'Ofeneinstellung: ' + add_inf[0])
             print(u'Temperatur:      ' + unicode(add_inf[1]))
             print(u'Backform:        ' + add_inf[2])
         print(u'Zubereitungsschritte:')
-        for i1 in range(3,9):
-            if add_inf[i1] != None:
-                print(unicode(i1-2) + u'. ' + add_inf[i1])
-
-
-
+        for i1 in range(3, 9):
+            if add_inf[i1] is not None:
+                print(unicode(i1 - 2) + u'. ' + add_inf[i1])
 
 finally:
     c.mysql_connect().close()
