@@ -7,7 +7,7 @@ from utilities import connector as c
 def get_existing():
     with c.mysql_connect().cursor() as cursor:
         # Read a single record
-        sql = "SELECT rezept_id, name FROM rezept_main"
+        sql = "SELECT rezept_id, name FROM rezept_main ORDER BY name"
         cursor.execute(sql)
         rezepte = cursor.fetchall()
 
@@ -23,4 +23,4 @@ def get_existing():
 
         cursor.close()
 
-    return rezept_id
+    return rezept_id, rezepte

@@ -7,7 +7,7 @@ from utilities import input_tools as it
 
 def fun():
     print(u'Wähle das zu ergänzende Rezept aus:')
-    rezept_id = int(g.get_existing())
+    rezept_id = int(g.get_existing()[0])
 
     try:
         with con.mysql_connect().cursor() as cursor:
