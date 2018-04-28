@@ -11,15 +11,15 @@ def get_existing():
         cursor.execute(sql)
         rezepte = cursor.fetchall()
 
-        print("===================")
+        print(u"==================================================================")
         print("Vorhandene Rezepte:")
         for k in range(0, len(rezepte)):
             d = unicode(rezepte[k][0]) + " " + rezepte[k][1]
             print(d)
-        print("-------------------")
+        print(u"------------------------------------------------------------------")
 
         rezept_id = raw_input("Eingabe der Nummer des gewuenschten Rezepts: ")
-        print("-------------------")
+        print(u"------------------------------------------------------------------")
 
         cursor.close()
 
