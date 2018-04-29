@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from utilities import connector as c
+from utilities import db_connect as db
 
 
 def fun():
@@ -9,7 +9,7 @@ def fun():
     sql_get_typen = u"SELECT typ FROM zutaten GROUP BY typ"
 
     try:
-        with c.mysql_connect().cursor() as cursor:
+        with db.mysql_connect().cursor() as cursor:
             cursor.execute(sql_get_zutaten)
             exist_zutaten = cursor.fetchall()
             z = []
@@ -99,7 +99,7 @@ def fun():
             sql_new_zutaten_menge = u'INSERT INTO zutaten_menge(rezept_ID, zutat, menge, einheit) ' \
                                     u'VALUES ' + u','.join(data_menge_ready)
             cursor.execute(sql_new_zutaten_menge)
-            c.mysql_connect().commit()
+            db.mysql_connect().commit()
 
     finally:
-        c.mysql_connect().close()
+        db.mysql_connect().close()

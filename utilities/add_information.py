@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from utilities import get_existing as g
-from utilities import connector as con
+from utilities import db_connect as db
 from utilities import input_tools as it
 
 
 def fun():
     print(u'Wähle das zu ergänzende Rezept aus:')
-    rezept_id = int(g.get_existing()[0])
+    rezept_id = int(db.get_existing()[0])
 
     try:
-        with con.mysql_connect().cursor() as cursor:
+        with db.mysql_connect().cursor() as cursor:
             sql_check_existence = "SELECT rezept_id FROM rezept_add"
             cursor.execute(sql_check_existence)
             existent_id = []
@@ -48,7 +47,7 @@ def fun():
                       unicode(rezept_id) + u',' + n_beschreibung + u',' + n_temperatur + u',' + n_ofeneinstellung + \
                       u',' + n_portionen + u',' + u','.join(n_zub) + u',' + n_backform + u',' + n_dauer + u')'
                 cursor.execute(sql)
-                con.mysql_connect().commit()
+                db.mysql_connect().commit()
 
     finally:
-        con.mysql_connect().close()
+        db.mysql_connect().close()
