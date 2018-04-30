@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import time
-from utilities import db_connect as db
+from utilities import db_tools as db
 from utilities import output_tools as o
 
 

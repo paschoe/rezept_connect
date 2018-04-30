@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from utilities import db_connect as db
+from utilities import db_tools as db
 from utilities import input_tools as it
+import pymysql
 
 
 def fun():
@@ -19,7 +20,6 @@ def fun():
         einheiten = []
         new_zutat = "dummy"
         unknown_zutat = []
-        i = 0
         exist_zutaten = db.get_zutaten_list()
         while new_zutat != "":
             new_zutat = it.str_input("Eingabe der Zutat: ")
@@ -28,7 +28,7 @@ def fun():
             zutaten.append(new_zutat)
             mengen.append(it.int_input("Eingabe der Menge ohne Einheit: "))
             einheiten.append(it.str_input("Eingabe der Einheit: "))
-            if new_zutat not in exist_zutaten:
+            if new_zutat.replace(u'"',u'') not in exist_zutaten:
                 unknown_zutat.append(new_zutat)
             print "......................................."
 
@@ -40,27 +40,14 @@ def fun():
             new_type = []
             for j in range(0, len(unknown_zutat)):
                 new_type.append(it.str_input("Definiere den Typ der neuen Zutat " + unknown_zutat[j] + ": "))
-            db.add_zutaten(unknown_zutat,new_type,commit=True)
-
-
+            db.add_zutaten(unknown_zutat, new_type, commit=True)
 
         # Befülle rezeptdb.zutaten_menge
-        sql_get_newrezeptid = u'SELECT rezept_id FROM rezept_main WHERE name = "' + new_rezept + u'"'
-        cursor.execute(sql_get_newrezeptid)
-        new_id = cursor.fetchone()[0]
-        data_menge_ready = []
-        for m in range(0, len(zutat)):
-            if menge[m] is None:
-                menge_temp = u'NULL'
-            else:
-                menge_temp = unicode(menge[m])
-            data_menge_ready.append(
-                u'(' + unicode(new_id) + u',"' + zutat[m] + u'",' + menge_temp + u',' + einheit[m] +
-                u')')
-        sql_new_zutaten_menge = u'INSERT INTO zutaten_menge(rezept_ID, zutat, menge, einheit) ' \
-                                u'VALUES ' + u','.join(data_menge_ready)
-        cursor.execute(sql_new_zutaten_menge)
-        db.mysql_connect().commit()
+        db.add_rezept_zutaten(rezept_name, zutaten, mengen, einheiten, commit=True)
+
+    except pymysql.DataError:
+        print("Eine fehlerhafte Eingabe liegt vor. Eingabe wird zurückgesetzt und neugestartet.")
+        fun()
 
     finally:
         db.mysql_connect().close()

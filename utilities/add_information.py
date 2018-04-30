@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from utilities import db_connect as db
+from utilities import db_tools as db
 from utilities import input_tools as it
 
 

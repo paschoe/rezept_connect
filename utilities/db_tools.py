@@ -9,7 +9,8 @@ def mysql_connect():
                                           user='patrick',
                                           password='secret',
                                           database='rezeptdb',
-                                          charset='utf8')
+                                          charset='utf8',
+                                          autocommit=True)
     return conn
 
 
@@ -31,11 +32,9 @@ def get_rezept_list():
         print(u"------------------------------------------------------------------")
 
         rezept_name = u""
-        for i in range(0,len(rezepte)):
+        for i in range(0, len(rezepte)):
             if int(rezepte[i][0]) == int(rezept_id):
                 rezept_name = unicode(rezepte[i][1])
-
-        cursor.close()
 
     return rezept_id, rezept_name, rezepte
 
@@ -51,7 +50,6 @@ def get_rezept(rezept_id):
         zutaten = cursor.fetchall()
         cursor.execute(sql_addinf)
         addinf = cursor.fetchone()
-        cursor.close()
     return zutaten, addinf
 
 
@@ -80,7 +78,7 @@ def get_zutaten_typen_list():
         cursor.execute(sql)
         exist_typ = cursor.fetchall()
         output = []
-        for i in range(0,len(exist_typ)):
+        for i in range(0, len(exist_typ)):
             if type(exist_typ[i][0]) is unicode:
                 output.append(exist_typ[i][0])
         print(u"Vorhandene Zutatstypen: " + u",".join(output))
@@ -95,3 +93,19 @@ def add_zutaten(zutaten, typen, commit):
         cursor.execute(sql)
     if commit is True:
         mysql_connect().commit()
+
+
+def add_rezept_zutaten(name, zutaten, mengen, einheiten,commit):
+    with mysql_connect().cursor() as cursor:
+        sql_abfrage = u'SELECT rezept_id FROM rezept_main WHERE name = ' + name + u''
+        cursor.execute(sql_abfrage)
+        rezept_id = cursor.fetchone()[0]
+        sql_data = []
+        for m in range(0, len(zutaten)):
+            sql_data.append(u'(' + unicode(rezept_id) + u',' + zutaten[m] + u',' + mengen[m] + u',' + einheiten[m] +
+                            u')')
+        sql_insert = u'INSERT INTO zutaten_menge(rezept_ID, zutat, menge, einheit) VALUES ' + u','.join(sql_data)
+        cursor.execute(sql_insert)
+    if commit is True:
+        mysql_connect().commit()
+
