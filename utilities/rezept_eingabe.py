@@ -23,12 +23,12 @@ def fun():
         exist_zutaten = db.get_zutaten_list()
         while new_zutat != "":
             new_zutat = it.str_input("Eingabe der Zutat: ")
-            if new_zutat == u'""':
+            if new_zutat == u'NULL':
                 break
             zutaten.append(new_zutat)
             mengen.append(it.int_input("Eingabe der Menge ohne Einheit: "))
             einheiten.append(it.str_input("Eingabe der Einheit: "))
-            if new_zutat.replace(u'"',u'') not in exist_zutaten:
+            if new_zutat.replace(u'"', u'') not in exist_zutaten:
                 unknown_zutat.append(new_zutat)
             print "......................................."
 
@@ -43,7 +43,8 @@ def fun():
             db.add_zutaten(unknown_zutat, new_type, commit=True)
 
         # Befülle rezeptdb.zutaten_menge
-        db.add_rezept_zutaten(rezept_name, zutaten, mengen, einheiten, commit=True)
+        rezept_id = db.add_rezept_zutaten(rezept_name, zutaten, mengen, einheiten, commit=True)
+        return rezept_id
 
     except pymysql.DataError:
         print("Eine fehlerhafte Eingabe liegt vor. Eingabe wird zurückgesetzt und neugestartet.")

@@ -18,14 +18,12 @@ def main():
     if user_choice == "1":
         rezept_abruf.fun()
     elif user_choice == "2":
-        rezept_eingabe.fun()
+        rezept_id = rezept_eingabe.fun()
         user_addinf = raw_input(u"Möchten Sie Informationen zur Zubereitung hinzufügen (j/n)? ")
         if user_addinf == "j":
-            pass
-            # TODO:add_information.fun()
+            add_information.fun(use_input=True,rezept_id=rezept_id)
     elif user_choice == "3":
-        pass
-        # TODO:add_information.fun()
+            add_information.fun(use_input=False,rezept_id=u"")
     else:
         print(u"Keine gültige Eingabe! Versuchen Sie es erneut!")
         main()
