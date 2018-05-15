@@ -109,3 +109,22 @@ def add_rezept_zutaten(name, zutaten, mengen, einheiten,commit):
     if commit is True:
         mysql_connect().commit()
 
+def check_existence_rezept_add(rezept_id):
+    sql = u'SELECT rezept_id FROM rezept_add WHERE rezept_id = ' + unicode(rezept_id)
+    with mysql_connect().cursor() as cursor:
+        cursor.execute(sql)
+        existence = cursor.fetchone()
+        if existence is None:
+            return False
+        else:
+            return True
+
+def add_rezept_add_information(rezept_id, beschreibung, temperatur, ofeneinstellung, portionen, zub, backform, dauer,
+                               commit):
+    sql = u'INSERT INTO rezept_add(rezept_id, beschreibung, temperatur, ofeneinstellung, portionen, zub1, zub2, zub3,' \
+          u' zub4, zub5, zub6, Backform, dauer) VALUES (' + rezept_id + u',' + beschreibung + u',' + temperatur + u','\
+          + ofeneinstellung + u',' + portionen+ u',' + u','.join(zub) + u',' + backform + u',' + dauer + u')'
+    with mysql_connect().cursor() as cursor:
+        cursor.execute(sql)
+    if commit is True:
+        mysql_connect().commit()
