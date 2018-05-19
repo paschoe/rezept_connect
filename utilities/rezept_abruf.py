@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 import time
 from utilities import db_tools as db
 from utilities import output_tools as o

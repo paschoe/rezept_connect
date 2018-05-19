@@ -1,3 +1,6 @@
+# -*- coding: UTF-8 -*-
+
+
 def str_input(print_text):
     user_input = raw_input(print_text)
     if user_input != '':

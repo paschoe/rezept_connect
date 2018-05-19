@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: UTF-8 -*-
 from utilities import add_information
 from utilities import rezept_abruf
 from utilities import rezept_eingabe
