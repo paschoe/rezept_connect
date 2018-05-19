@@ -106,6 +106,7 @@ def add_rezept_zutaten(name, zutaten, mengen, einheiten,commit):
                             u')')
         sql_insert = u'INSERT INTO zutaten_menge(rezept_ID, zutat, menge, einheit) VALUES ' + u','.join(sql_data)
         cursor.execute(sql_insert)
+        return rezept_id
     if commit is True:
         mysql_connect().commit()
 

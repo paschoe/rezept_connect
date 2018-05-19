@@ -25,7 +25,7 @@ def fun(use_input, rezept_id):
             print("Es stehen 6 Zubereitungsschritte zur Verfügung: ")
             n_zub = []
             for i in range(0, 6):
-                n_zub.append(it.str_input("Schritt" + str(i + 1) + ": "))
+                n_zub.append(it.str_input("Schritt " + str(i + 1) + ": "))
 
             q_back = raw_input("Wird der Backofen benötigt? Antwort mit j/n. ")
             if q_back == "j":

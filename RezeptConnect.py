@@ -21,9 +21,9 @@ def main():
         rezept_id = rezept_eingabe.fun()
         user_addinf = raw_input(u"Möchten Sie Informationen zur Zubereitung hinzufügen (j/n)? ")
         if user_addinf == "j":
-            add_information.fun(use_input=True,rezept_id=rezept_id)
+            add_information.fun(use_input=True, rezept_id=unicode(rezept_id))
     elif user_choice == "3":
-            add_information.fun(use_input=False,rezept_id=u"")
+            add_information.fun(use_input=False, rezept_id=u"")
     else:
         print(u"Keine gültige Eingabe! Versuchen Sie es erneut!")
         main()
